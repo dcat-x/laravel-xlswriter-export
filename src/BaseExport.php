@@ -31,7 +31,7 @@ abstract class BaseExport
     public $tableTitle = '表名';
 
     /**
-     * @var Collection 数据集合
+     * @var Collection|null 数据集合
      */
     public $data;
 
@@ -543,7 +543,7 @@ abstract class BaseExport
             });
 
         // 释放数据
-        unset($this->data);
+        $this->data = null;
 
         return $this;
     }
@@ -766,7 +766,7 @@ abstract class BaseExport
     }
 
     /**
-     * @var Collection 分块数据
+     * @var Collection|null 分块数据
      */
     public $chunkData;
 
@@ -1193,7 +1193,8 @@ abstract class BaseExport
 
             // 插入分块数据
             $this->insertChunkData($result);
-            unset($this->chunkData, $result);
+            $this->chunkData = null;
+            unset($result);
 
             if ($this->debug) {
                 $this->log('已导出：'.$this->completed.'条，耗时'.(number_format(microtime(true) - $this->time, 2)).'秒'.'-'.'内存：'.memory_get_peak_usage() / 1024000);

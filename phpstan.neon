@@ -11,3 +11,9 @@ parameters:
         - vendor
 
     treatPhpDocTypesAsCertain: false
+
+    ignoreErrors:
+        # BaseExport 是抽象类，子类构造函数签名应保持一致
+        -
+            identifier: new.static
+            path: src/BaseExport.php

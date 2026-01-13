@@ -7,7 +7,10 @@
         "export",
         "xlswriter",
         "spreadsheet",
-        "xlsx"
+        "xlsx",
+        "high-performance",
+        "large-dataset",
+        "swoole"
     ],
     "homepage": "https://github.com/dcat-x/laravel-xlswriter-export",
     "license": "MIT",
@@ -24,7 +27,8 @@
     ],
     "support": {
         "issues": "https://github.com/dcat-x/laravel-xlswriter-export/issues",
-        "source": "https://github.com/dcat-x/laravel-xlswriter-export"
+        "source": "https://github.com/dcat-x/laravel-xlswriter-export",
+        "docs": "https://github.com/dcat-x/laravel-xlswriter-export#readme"
     },
     "require": {
         "php": "^8.2",
@@ -32,11 +36,15 @@
         "laravel/framework": "^12.0"
     },
     "require-dev": {
+        "larastan/larastan": "^3.0",
         "laravel/pint": "^1.0",
         "orchestra/testbench": "^10.0",
         "pestphp/pest": "^3.0",
         "pestphp/pest-plugin-laravel": "^3.0",
         "viest/php-ext-xlswriter-ide-helper": "dev-master"
+    },
+    "suggest": {
+        "ext-swoole": "Required for async export support in Swoole environments"
     },
     "autoload": {
         "psr-4": {
@@ -50,8 +58,15 @@
     },
     "scripts": {
         "format": "pint",
+        "format:check": "pint --test",
+        "analyse": "phpstan analyse",
         "test": "pest",
-        "test:coverage": "pest --coverage"
+        "test:coverage": "pest --coverage",
+        "check": [
+            "@format:check",
+            "@analyse",
+            "@test"
+        ]
     },
     "config": {
         "sort-packages": true,
@@ -59,6 +74,6 @@
             "pestphp/pest-plugin": true
         }
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "prefer-stable": true
 }

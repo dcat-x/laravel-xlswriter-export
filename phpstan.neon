@@ -7,9 +7,7 @@ parameters:
 
     level: 5
 
-    ignoreErrors:
-        # xlswriter 扩展类型提示不完整
-        - '#Call to an undefined method Vtiful\\Kernel\\Excel::#'
-
     excludePaths:
         - vendor
+
+    treatPhpDocTypesAsCertain: false

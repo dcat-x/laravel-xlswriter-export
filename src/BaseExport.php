@@ -227,10 +227,10 @@ abstract class BaseExport
      * @param  Builder|array|Collection|null  $dataSource  数据源传入查询构造器、数组、集合均可，为空时需重写buildData以定义数据
      * @param  null  $time  传入时间戳以计算查询在内的导出耗时，$time =microtime(true);
      */
-    public function __construct($dataSource, $time = null)
+    public function __construct($dataSource, ?float $time = null)
     {
         if ($this->debug) {
-            $this->time = $time ?? microtime(true);
+            $this->time = $time !== null ? $time : microtime(true);
             $this->log('开始内存占用：'.memory_get_peak_usage() / 1024000);
         }
         $this->init($dataSource);
@@ -395,7 +395,7 @@ abstract class BaseExport
     public $useTitle = true;
 
     /**
-     * @var string 首行标题的内容
+     * @var resource|null 首行标题样式
      */
     public $titleStyle;
 
@@ -485,7 +485,11 @@ abstract class BaseExport
 
     public function getNormalStyle()
     {
-        return $this->normalStyle ?: $this->normalStyle = (new Format($this->fileHandle))
+        if ($this->normalStyle !== null) {
+            return $this->normalStyle;
+        }
+
+        return $this->normalStyle = (new Format($this->fileHandle))
             ->fontSize(10)
             ->font($this->fontFamily)
             ->align(Format::FORMAT_ALIGN_CENTER, Format::FORMAT_ALIGN_VERTICAL_CENTER)
@@ -564,14 +568,13 @@ abstract class BaseExport
     /**
      * 根据表头最大列数，设置末尾列名
      *
-     * @param  null  $end
      * @return $this
      *
      * @Date 2023/6/25 19:24
      */
-    public function setEnd($end = null)
+    public function setEnd(?string $end = null)
     {
-        $this->end = $end ?? $this->getColumn($this->headerLen - 1);
+        $this->end = $end !== null ? $end : $this->getColumn($this->headerLen - 1);
 
         return $this;
     }
@@ -579,14 +582,13 @@ abstract class BaseExport
     /**
      * 根据表头header的数组长度，设置最大列数
      *
-     * @param  null  $headerLen
      * @return $this
      *
      * @Date 2023/6/25 19:25
      */
-    public function setHeaderLen($headerLen = null)
+    public function setHeaderLen(?int $headerLen = null)
     {
-        $this->headerLen = $headerLen ?? count($this->getHeader());
+        $this->headerLen = $headerLen !== null ? $headerLen : count($this->getHeader());
 
         return $this;
     }
@@ -594,14 +596,14 @@ abstract class BaseExport
     /**
      * 挂载文件资源类
      *
-     * @param  null  $fileHandle
+     * @param  resource|null  $fileHandle
      * @return $this
      *
      * @Date 2023/6/25 19:26
      */
     public function setFileHandle($fileHandle = null)
     {
-        $this->fileHandle = $fileHandle ?? $this->excel->getHandle();
+        $this->fileHandle = $fileHandle !== null ? $fileHandle : $this->excel->getHandle();
 
         return $this;
     }
@@ -609,14 +611,13 @@ abstract class BaseExport
     /**
      * 输出到文件并设置文件路径
      *
-     * @param  null  $filePath
      * @return $this
      *
      * @Date 2023/6/25 19:22
      */
-    public function setFilePath($filePath = null)
+    public function setFilePath(?string $filePath = null)
     {
-        $this->filePath = $filePath ?? $this->output();
+        $this->filePath = $filePath !== null ? $filePath : $this->output();
 
         return $this;
     }
@@ -655,7 +656,7 @@ abstract class BaseExport
      */
     public function setRowHeight()
     {
-        return $this->excel->setRow($this->currentLine + 1, $this->rowHeight);
+        return $this->excel->setRow('A'.($this->currentLine + 1), $this->rowHeight);
     }
 
     /**
@@ -786,7 +787,7 @@ abstract class BaseExport
         // 给每行数据绑定序号
         foreach ($this->chunkData as $k => $rowData) {
             if ($rowData instanceof Model) {
-                $rowData->index = $index;
+                $rowData->setAttribute('index', $index);
             } else {
                 $rowData['index'] = $index;
                 $this->chunkData->put($k, $rowData);
@@ -1027,13 +1028,13 @@ abstract class BaseExport
     /**
      * 执行下载
      *
-     * @param  null  $filePath
+     * @return BinaryFileResponse|never
      *
      * @Date 2023/6/25 19:40
      */
-    public function download($filePath = null)
+    public function download(?string $filePath = null)
     {
-        if ($filePath) {
+        if ($filePath !== null) {
             $this->filePath = $filePath;
         }
 
@@ -1267,9 +1268,8 @@ abstract class BaseExport
      * make代替new
      *
      * @param  mixed  ...$params
-     * @return $this
      */
-    public static function make(...$params)
+    public static function make(...$params): static
     {
         return new static(...$params);
     }

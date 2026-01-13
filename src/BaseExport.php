@@ -231,7 +231,7 @@ abstract class BaseExport
     {
         if ($this->debug) {
             $this->time = $time ?? microtime(true);
-            dump('开始内存占用：'.memory_get_peak_usage() / 1024000);
+            $this->log('开始内存占用：'.memory_get_peak_usage() / 1024000);
         }
         $this->init($dataSource);
     }
@@ -899,8 +899,7 @@ abstract class BaseExport
             }
         }
         if ($this->debug) {
-            dump('触发afterInsertData-耗时'.(number_format(microtime(true) - $this->time, 2)).'秒'.'-'.'内存：'.memory_get_peak_usage() / 1024000);
-            dd('数据插入已完成');
+            $this->log('触发afterInsertData-耗时'.(number_format(microtime(true) - $this->time, 2)).'秒'.'-'.'内存：'.memory_get_peak_usage() / 1024000);
         }
 
         return $this;
@@ -1159,6 +1158,18 @@ abstract class BaseExport
     public $time;
 
     /**
+     * 调试日志输出
+     */
+    protected function log(string $message): void
+    {
+        if (function_exists('logger')) {
+            logger()->debug($message);
+        } else {
+            error_log($message);
+        }
+    }
+
+    /**
      * 分块处理方法
      *
      * @param  null|callable  $callback
@@ -1178,14 +1189,13 @@ abstract class BaseExport
             $result = $callback($times, $this->chunkSize);
             $count = count($result);
             $this->completed += $count;
-            // dd($times,$result,$count);
 
             // 插入分块数据
             $this->insertChunkData($result);
             unset($this->chunkData, $result);
 
             if ($this->debug) {
-                dump('已导出：'.$this->completed.'条，耗时'.(number_format(microtime(true) - $this->time, 2)).'秒'.'-'.'内存：'.memory_get_peak_usage() / 1024000);
+                $this->log('已导出：'.$this->completed.'条，耗时'.(number_format(microtime(true) - $this->time, 2)).'秒'.'-'.'内存：'.memory_get_peak_usage() / 1024000);
             }
             $times++;
         } while ($count === $this->chunkSize && $this->completed < $this->max);

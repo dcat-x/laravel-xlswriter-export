@@ -206,10 +206,11 @@ describe('BaseExport', function () {
     });
 
     describe('file properties', function () {
-        it('returns filename', function () {
+        it('returns filename with timestamp and extension', function () {
             $export = TestExport::make([]);
 
-            expect($export->getFilename())->toBe('test_export');
+            expect($export->getFilename())->toStartWith('test_export')
+                ->and($export->getFilename())->toEndWith('.xlsx');
         });
 
         it('returns table title', function () {

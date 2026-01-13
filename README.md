@@ -3,6 +3,7 @@
 # Laravel Xlswriter Export
 
 <p>
+    <a href="https://github.com/dcat-x/laravel-xlswriter-export/actions"><img src="https://github.com/dcat-x/laravel-xlswriter-export/actions/workflows/tests.yml/badge.svg" alt="Tests"></a>
     <a href="https://packagist.org/packages/dcat-x/laravel-xlswriter-export"><img src="https://poser.pugx.org/dcat-x/laravel-xlswriter-export/v/stable" alt="Latest Stable Version"></a>
     <a href="https://packagist.org/packages/dcat-x/laravel-xlswriter-export"><img src="https://img.shields.io/packagist/dt/dcat-x/laravel-xlswriter-export.svg" alt="Total Downloads"></a>
     <a href="https://www.php.net/"><img src="https://img.shields.io/badge/php-8.2+-59a9f8.svg" alt="PHP Version"></a>

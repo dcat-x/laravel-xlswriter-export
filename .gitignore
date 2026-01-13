@@ -1,0 +1,42 @@
+# Dependencies
+/vendor/
+node_modules/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Testing
+.phpunit.result.cache
+.phpunit.cache/
+coverage/
+
+# Build artifacts
+build/
+dist/
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+npm-debug.log
+yarn-error.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Composer
+composer.lock
+
+# PHP CS Fixer
+.php-cs-fixer.cache
+.php_cs.cache
+
+# Other
+cghooks.lock

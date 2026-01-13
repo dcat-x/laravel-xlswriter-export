@@ -1,0 +1,64 @@
+{
+    "name": "dcat-x/laravel-xlswriter-export",
+    "description": "A high-performance Excel export package for Laravel based on xlswriter extension, supporting large datasets with low memory usage.",
+    "keywords": [
+        "laravel",
+        "excel",
+        "export",
+        "xlswriter",
+        "spreadsheet",
+        "xlsx"
+    ],
+    "homepage": "https://github.com/dcat-x/laravel-xlswriter-export",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "aoding9",
+            "email": "xy5217733@163.com"
+        },
+        {
+            "name": "cooper",
+            "email": "myxiaoao@gmail.com"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/dcat-x/laravel-xlswriter-export/issues",
+        "source": "https://github.com/dcat-x/laravel-xlswriter-export"
+    },
+    "require": {
+        "php": "^8.2",
+        "ext-xlswriter": "*",
+        "laravel/framework": "^12.0",
+        "viest/php-ext-xlswriter-ide-helper": "dev-master"
+    },
+    "require-dev": {
+        "laravel/pint": "^1.0",
+        "orchestra/testbench": "^10.0",
+        "pestphp/pest": "^3.0",
+        "pestphp/pest-plugin-laravel": "^3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Aoding9\\Laravel\\Xlswriter\\Export\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Aoding9\\Laravel\\Xlswriter\\Export\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "format": "pint",
+        "test": "pest",
+        "test:coverage": "pest --coverage"
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

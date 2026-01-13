@@ -13,8 +13,6 @@
 
 **基于 [xlswriter](https://xlswriter-docs.viest.me/) 扩展的 Laravel 高性能 Excel 导出工具**
 
-[English](README.en.md) | 简体中文
-
 </div>
 
 ## 目录
